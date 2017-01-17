@@ -1,21 +1,11 @@
 #!/bin/bash
 
-# produce all values of environment
-# variables with a name starting with $1
-all_environment_values() {
-	( set -o posix ; set ) \
-		| grep $1 \
-		| cut -d = -f 2
-}
+if [ ! -d /backup ]; then
+	echo Error: directory /backup does not exist, backup volume missing?
+	exit 1
+fi
 
 echo Generating config...
-
-# store database connection parameters for pg_dump
-for db in $(all_environment_values DATABASE); do
-	echo $db >> ~/.pgpass
-done
-
-chmod 0600 ~/.pgpass
 
 # store ssh key
 mkdir -p /root/.ssh

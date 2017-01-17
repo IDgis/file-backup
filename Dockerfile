@@ -5,7 +5,6 @@ RUN apt-get update \
 		cron \
 		duplicity \
 		lftp \
-		postgresql-client \
 		python-paramiko \
 		openssh-client \
 	&& rm -rf /var/lib/apt/lists/*
@@ -14,7 +13,5 @@ COPY backup.sh /opt/
 COPY start.sh /opt/
 
 RUN chmod u+x /opt/*.sh
-
-VOLUME /backup
 
 CMD ["/opt/start.sh"]
