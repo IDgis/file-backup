@@ -11,6 +11,7 @@ RUN apt-get update \
 	
 COPY backup.sh /opt/
 COPY start.sh /opt/
+COPY restore.sh /opt/
 
 RUN chmod u+x /opt/*.sh
 
