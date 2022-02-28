@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eu
+
 echo Restoring back-up ...
 
 # Store ssh key
