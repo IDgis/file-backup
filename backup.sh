@@ -20,21 +20,6 @@ echo Performing remote backup: $(date)
 
 cd /backup
 
-# dump databases
-while read db; do
-	IFS=: db_parts=( $db )
-	
-	echo Dumping database ${db_parts[0]}:${db_parts[1]}/${db_parts[2]}...
-	
-	pg_dump \
-		-v \
-		-h ${db_parts[0]} \
-		-p  ${db_parts[1]} \
-		-F c \
-		-f ${db_parts[0]}_${db_parts[1]}_${db_parts[2]}.sql \
-		-U ${db_parts[3]} ${db_parts[2]}
-done < ~/.pgpass
-
 # perform an incremental backup using duplicity:
 echo "Performing incremental backup..."
 duplicity incremental \
