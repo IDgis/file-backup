@@ -1,11 +1,11 @@
-FROM ubuntu:xenial
+FROM ubuntu:20.04
 
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
 		cron \
 		duplicity \
 		lftp \
-		python-paramiko \
+		python3-paramiko \
 		openssh-client \
 	&& rm -rf /var/lib/apt/lists/*
 	
