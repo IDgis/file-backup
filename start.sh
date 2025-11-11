@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eu
+
 if [ ! -d /backup ]; then
 	echo Error: directory /backup does not exist, backup volume missing?
 	exit 1
