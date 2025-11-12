@@ -1,0 +1,37 @@
+services:
+  sftp:
+    image: atmoz/sftp
+    command: sftp_user:sftp_password:::backup
+    restart: unless-stopped
+
+  backup:
+    image: idgis/file-backup
+    restart: unless-stopped
+    environment:
+      - SFTP_USER=sftp_user
+      - SFTP_PASSWORD=sftp_password
+      - SFTP_HOST=sftp
+      - SFTP_PORT=22
+      - BACKUP_NAME=backup/file
+      - PASSPHRASE=passphrase
+      - SCHEDULE=$SCHEDULE
+    volumes:
+      - files:/backup/
+
+  init-files:
+    image: alpine:3.20
+    command: >
+      sh -c "
+        echo 'Generating random files...' &&
+        mkdir -p /data &&
+        for i in $(seq 1 5); do
+          head -c 1K </dev/urandom > /data/file_$${i}.bin;
+        done &&
+        echo 'Done generating files.'
+      "
+    volumes:
+      - files:/data
+    restart: "no"
+
+volumes:
+  files:
